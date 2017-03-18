@@ -34,18 +34,24 @@ class Main(QMainWindow, polishVerbsGui.Ui_MainWindow):
                               my TEXT, wy TEXT, oni_one TEXT)""")
         self.dbConn.commit()
 
+        self.new_verb_button_clicked()
+        self.new_verb_button.clicked.connect(self.new_verb_button_clicked)
+        self.check_button.clicked.connect(self.check_button_clicked)
+
+    def new_verb_button_clicked(self):
+        """Change the Verb in the top of application and clear all the information that was
+           entered by the user before"""
 
         self.dbCursor.execute("""SELECT count(verb) FROM Main""")
         number_of_verbs = self.dbCursor.fetchone()
         id_of_random_verb = random.randint(1, number_of_verbs[0])
         self.dbCursor.execute("""SELECT verb FROM Main WHERE id=?""", (id_of_random_verb,))
         random_verb = self.dbCursor.fetchone()
-        print random_verb[0]
-        self.verb.setText(random_verb[0])
-
-        self.check_button.clicked.connect(self.check_button_clicked)
-
-
+        random_verb_unicode = random_verb[0].decode('utf-8')
+        self.verb.setText(random_verb_unicode)
+        all_line_edit_fields = (self.ja, self.ty, self.on_ona_ono, self.my, self.wy, self.oni_one)
+        for field in all_line_edit_fields:
+            field.clear()
 
     def check_button_clicked(self):
         """Paint the correct fields in green, paint wrong fields in red.
@@ -56,6 +62,7 @@ class Main(QMainWindow, polishVerbsGui.Ui_MainWindow):
         all_line_edit_fields = (self.ja, self.ty, self.on_ona_ono, self.my, self.wy, self.oni_one)
         right_answers = 0
         current_verb = self.verb.text().encode('utf-8')
+        print current_verb
         self.dbCursor.execute('SELECT * FROM Main WHERE verb=?', (current_verb,))
         allForms = self.dbCursor.fetchall()
         for form in allForms:
@@ -88,8 +95,8 @@ class Main(QMainWindow, polishVerbsGui.Ui_MainWindow):
 
 def main():
     QCoreApplication.setApplicationName("PolishVerbs")
-    QCoreApplication.setApplicationVersion("0.1")
-    QCoreApplication.setOrganizationName("KS")
+    QCoreApplication.setApplicationVersion("0.2")
+    QCoreApplication.setOrganizationName("Kate Semyroz")
 
     app = QApplication(sys.argv)
     form = Main()
