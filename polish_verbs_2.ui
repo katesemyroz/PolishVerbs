@@ -7,17 +7,23 @@
     <x>0</x>
     <y>0</y>
     <width>596</width>
-    <height>381</height>
+    <height>445</height>
    </rect>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>596</width>
+    <height>445</height>
+   </size>
+  </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Polish Verbs</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>230</x>
+      <x>220</x>
       <y>50</y>
       <width>161</width>
       <height>16</height>
@@ -33,9 +39,9 @@
    <widget class="QLabel" name="verb">
     <property name="geometry">
      <rect>
-      <x>260</x>
+      <x>10</x>
       <y>20</y>
-      <width>91</width>
+      <width>581</width>
       <height>31</height>
      </rect>
     </property>
@@ -320,6 +326,27 @@
     </property>
     <property name="text">
      <string>New verb</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="result_label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>350</y>
+      <width>571</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
   </widget>
