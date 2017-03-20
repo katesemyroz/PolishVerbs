@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from PySide.QtGui import *
 from PySide.QtCore import *
 import sys
@@ -23,6 +25,9 @@ class Main(QMainWindow, polishVerbsGui.Ui_MainWindow):
     dbPath = appDataPath + "pydata.db"
     dbConn = sqlite3.connect(dbPath)
     dbConn.text_factory = str
+
+    #variable which counts how much right answers the user have
+    number_of_right_answers = 0
 
     def __init__(self, parent=None):
         super(Main, self).__init__(parent)
@@ -52,12 +57,13 @@ class Main(QMainWindow, polishVerbsGui.Ui_MainWindow):
         all_line_edit_fields = (self.ja, self.ty, self.on_ona_ono, self.my, self.wy, self.oni_one)
         for field in all_line_edit_fields:
             field.clear()
+            field.setStyleSheet("QLineEdit{background-color: white}")
 
     def check_button_clicked(self):
-        """Paint the correct fields in green, paint wrong fields in red.
-            If all fields are correct - write text 'Everything is correct', else - 'You
-            have n correct answers' or 'Everything is wrong! Try again' """
-
+        """Check if all the fields are written in the right way
+           by comparing meaning with information in database.
+           Paint the correct fields in green, wrong fields in red.
+           If all fields are correct - number of right answers increase"""
 
         all_line_edit_fields = (self.ja, self.ty, self.on_ona_ono, self.my, self.wy, self.oni_one)
         right_answers = 0
@@ -71,27 +77,15 @@ class Main(QMainWindow, polishVerbsGui.Ui_MainWindow):
                 what_user_enters = this_line_edit.text().encode('utf-8')
                 if form[x] == what_user_enters:
                     right_answers += 1
-                    this_line_edit.setStyleSheet("selection-background-color: green; background-color: green")
+                    this_line_edit.setStyleSheet("""QLineEdit{background-color: #33ff33}
+                    QLineEdit:hover{border: 1px solid white; background-color: #33ff33}""")
                 else:
-                    this_line_edit.setStyleSheet("selection-background-color: red; background-color: red")
+                    this_line_edit.setStyleSheet("""QLineEdit{background-color: #ff3300}
+                    QLineEdit:hover{border: 1px solid white; background-color: pink}""")
 
-
-        print right_answers
         if right_answers == 6:
-            print "Everything is correct!"
-        else:
-            if right_answers == 0:
-                print "Everything is wrong! Try again"
-            else:
-                print "You have", right_answers, "right answers"
-
-
-    def check_fields(self):
-        """Check if all the fields are written in the right way or
-           in the wrong way by comparing meaning with information in
-           database"""
-        pass
-
+            self.number_of_right_answers += 1
+            self.label_with_result.setText(`self.number_of_right_answers`)
 
 def main():
     QCoreApplication.setApplicationName("PolishVerbs")

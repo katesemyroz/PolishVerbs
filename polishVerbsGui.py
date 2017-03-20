@@ -2,6 +2,9 @@
 
 # Form implementation generated from reading ui file 'polish_verbs_2.ui'
 #
+# Created: Mon Mar 20 14:06:14 2017
+#      by: pyside-uic 0.2.15 running on PySide 1.2.4
+#
 # WARNING! All changes made in this file will be lost!
 
 from PySide import QtCore, QtGui
@@ -9,15 +12,16 @@ from PySide import QtCore, QtGui
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(596, 381)
+        MainWindow.resize(596, 445)
+        MainWindow.setMaximumSize(QtCore.QSize(596, 445))
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtGui.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(230, 50, 161, 16))
+        self.label.setGeometry(QtCore.QRect(220, 50, 161, 16))
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.verb = QtGui.QLabel(self.centralwidget)
-        self.verb.setGeometry(QtCore.QRect(260, 20, 91, 31))
+        self.verb.setGeometry(QtCore.QRect(10, 20, 581, 31))
         font = QtGui.QFont()
         font.setFamily("Buxton Sketch")
         font.setPointSize(28)
@@ -120,6 +124,20 @@ class Ui_MainWindow(object):
         font.setPointSize(12)
         self.new_verb_button.setFont(font)
         self.new_verb_button.setObjectName("new_verb_button")
+        self.label_8 = QtGui.QLabel(self.centralwidget)
+        self.label_8.setGeometry(QtCore.QRect(20, 350, 221, 31))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.label_8.setFont(font)
+        self.label_8.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.label_8.setObjectName("label_8")
+        self.label_with_result = QtGui.QLabel(self.centralwidget)
+        self.label_with_result.setGeometry(QtCore.QRect(250, 350, 81, 31))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.label_with_result.setFont(font)
+        self.label_with_result.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.label_with_result.setObjectName("label_with_result")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 596, 21))
@@ -140,7 +158,7 @@ class Ui_MainWindow(object):
         MainWindow.setTabOrder(self.new_verb_button, self.check_button)
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "MainWindow", None, QtGui.QApplication.UnicodeUTF8))
+        MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Polish Verbs", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("MainWindow", "Print correct forms of the verb", None, QtGui.QApplication.UnicodeUTF8))
         self.verb.setText(QtGui.QApplication.translate("MainWindow", "VERB", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("MainWindow", "ja", None, QtGui.QApplication.UnicodeUTF8))
@@ -151,4 +169,6 @@ class Ui_MainWindow(object):
         self.label_7.setText(QtGui.QApplication.translate("MainWindow", "oni/one", None, QtGui.QApplication.UnicodeUTF8))
         self.check_button.setText(QtGui.QApplication.translate("MainWindow", "Check forms!", None, QtGui.QApplication.UnicodeUTF8))
         self.new_verb_button.setText(QtGui.QApplication.translate("MainWindow", "New verb", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_8.setText(QtGui.QApplication.translate("MainWindow", "Number of right answers:", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_with_result.setText(QtGui.QApplication.translate("MainWindow", "0", None, QtGui.QApplication.UnicodeUTF8))
 
