@@ -8,6 +8,7 @@ import sqlite3
 import os
 import logging
 import random
+import csv
 
 import polishVerbsGui
 
@@ -38,10 +39,26 @@ class Main(QMainWindow, polishVerbsGui.Ui_MainWindow):
                               verb TEXT, ja TEXT, ty TEXT, on_ona_ono TEXT,
                               my TEXT, wy TEXT, oni_one TEXT)""")
         self.dbConn.commit()
+        self.fill_database()
 
         self.new_verb_button_clicked()
         self.new_verb_button.clicked.connect(self.new_verb_button_clicked)
         self.check_button.clicked.connect(self.check_button_clicked)
+
+
+    def fill_database(self):
+        """This function checks if there are words in database. If no - fills it from verbs.csv file"""
+
+        self.dbCursor.execute("""SELECT count(verb) FROM Main""")
+        number_of_verbs = self.dbCursor.fetchone()
+        if (number_of_verbs[0] == 0):
+            with open("verbs_and_forms.csv", 'rb') as resultFile:
+                reader = csv.reader(resultFile)
+                for row in reader:
+                    self.dbCursor.execute('''INSERT INTO Main VALUES (null, ?, ?, ?, ?, ?, ?, ?)''', row)
+                    self.dbConn.commit()
+        else:
+            pass
 
     def new_verb_button_clicked(self):
         """Change the Verb in the top of application and clear all the information that was

@@ -18,6 +18,7 @@ class Profiler(object):
 with Profiler() as p:
 
     #take verbs
+    #amount of some verbs: o - 400+ words, p - 593 words, r - 249, s - 353, u-z - 1430;
     list_of_words = []
     alphabet = ['a/', 'b/', 'c/', 'd/', 'e/', 'f/', 'g/', 'h/', 'i/', 'j/', 'k/', 'l/', 'ł/', 'm/', 'n/', 'o/', 'p/',
                 'r/', 's/', 't/', 'u/', 'w/', 'y/', 'z/']
@@ -49,19 +50,23 @@ with Profiler() as p:
 
     #==========================================================
 
-    #Write to the file
-
+    # #Write to the file
+    #
     # with open("output.csv", 'ab') as resultFile:
     #     writer = csv.writer(resultFile)
     #     writer.writerows(all_forms_and_verbs)
 
 
-    #Read from the file
+    # #Read from the file
 
-    # with open("output.csv", 'rb') as resultFile:
+    # with open("verbs_and_forms.csv", 'rb') as resultFile:
     #     reader = csv.reader(resultFile)
     #     for row in reader:
     #         print ', '.join(row)
-
-
-
+    #
+    #     #Take one certain row and print 1st element in row
+    #     interestingrow = [row for idx, row in enumerate(reader) if idx == 4126]
+    #     print interestingrow[0][0]
+    #
+    #     #Take rows in range (a1, a2)
+    #     interestingrows = [row for idx, row in enumerate(reader) if idx in (a1, a2)]
