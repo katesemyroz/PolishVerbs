@@ -39,10 +39,10 @@
    <widget class="QLabel" name="verb">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>581</width>
-      <height>31</height>
+      <x>110</x>
+      <y>0</y>
+      <width>381</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">
@@ -50,6 +50,9 @@
       <family>Buxton Sketch</family>
       <pointsize>28</pointsize>
      </font>
+    </property>
+    <property name="toolTip">
+     <string/>
     </property>
     <property name="text">
      <string>VERB</string>

@@ -3,12 +3,11 @@
 from PySide.QtGui import *
 from PySide.QtCore import *
 import sys
-import re
 import sqlite3
 import os
-import logging
 import random
 import csv
+import time
 
 import polishVerbsGui
 
@@ -46,8 +45,36 @@ class Main(QMainWindow, polishVerbsGui.Ui_MainWindow):
         self.check_button.clicked.connect(self.check_button_clicked)
 
 
+    def test_form(self):
+        """
+        Test methods with 3 correct forms and 3 incorrect
+        """
+
+        self.verb.setText("być".decode("utf-8"))
+        self.ja.setText("j".decode("utf-8"))
+        self.ty.setText("jesteś".decode("utf-8"))
+        self.on_ona_ono.setText("jest".decode("utf-8"))
+        self.my.setText("jeeeeemmmmmyyy".decode("utf-8"))
+        self.wy.setText("jesteście".decode("utf-8"))
+        self.oni_one.setText("saaaaaaa".decode("utf-8"))
+
+    def test_form_right_answers(self):
+        """
+        Test methods with all correct forms
+        """
+
+        self.verb.setText("być".decode("utf-8"))
+        self.ja.setText("jestem".decode("utf-8"))
+        self.ty.setText("jesteś".decode("utf-8"))
+        self.on_ona_ono.setText("jest".decode("utf-8"))
+        self.my.setText("jesteśmy".decode("utf-8"))
+        self.wy.setText("jesteście".decode("utf-8"))
+        self.oni_one.setText("są".decode("utf-8"))
+
     def fill_database(self):
-        """This function checks if there are words in database. If no - fills it from verbs.csv file"""
+        """
+        This function checks if there are words in database. If no - fills it from verbs.csv file
+        """
 
         self.dbCursor.execute("""SELECT count(verb) FROM Main""")
         number_of_verbs = self.dbCursor.fetchone()
@@ -56,13 +83,15 @@ class Main(QMainWindow, polishVerbsGui.Ui_MainWindow):
                 reader = csv.reader(resultFile)
                 for row in reader:
                     self.dbCursor.execute('''INSERT INTO Main VALUES (null, ?, ?, ?, ?, ?, ?, ?)''', row)
-                    self.dbConn.commit()
+                self.dbConn.commit()
         else:
             pass
 
     def new_verb_button_clicked(self):
-        """Change the Verb in the top of application and clear all the information that was
-           entered by the user before"""
+        """
+        Change the Verb in the top of application and clear all the information that was
+        entered by the user before
+        """
 
         self.dbCursor.execute("""SELECT count(verb) FROM Main""")
         number_of_verbs = self.dbCursor.fetchone()
@@ -74,18 +103,21 @@ class Main(QMainWindow, polishVerbsGui.Ui_MainWindow):
         all_line_edit_fields = (self.ja, self.ty, self.on_ona_ono, self.my, self.wy, self.oni_one)
         for field in all_line_edit_fields:
             field.clear()
-            field.setStyleSheet("QLineEdit{background-color: white}")
+            field.setStyleSheet("""border: 2px solid #8c7aae; border-style: outset;
+            border-radius: 3px; background-color: white""")
 
     def check_button_clicked(self):
-        """Check if all the fields are written in the right way
-           by comparing meaning with information in database.
-           Paint the correct fields in green, wrong fields in red.
-           If all fields are correct - number of right answers increase"""
+        """
+        Check if all the fields are written in the right way
+        by comparing meaning with information in database.
+        Paint the correct fields in green, wrong fields in red.
+        If all fields are correct - number of right answers increase
+        """
 
         all_line_edit_fields = (self.ja, self.ty, self.on_ona_ono, self.my, self.wy, self.oni_one)
         right_answers = 0
         current_verb = self.verb.text().encode('utf-8')
-        print current_verb
+        #print current_verb, type(current_verb)
         self.dbCursor.execute('SELECT * FROM Main WHERE verb=?', (current_verb,))
         allForms = self.dbCursor.fetchall()
         for form in allForms:
@@ -94,11 +126,11 @@ class Main(QMainWindow, polishVerbsGui.Ui_MainWindow):
                 what_user_enters = this_line_edit.text().encode('utf-8')
                 if form[x] == what_user_enters:
                     right_answers += 1
-                    this_line_edit.setStyleSheet("""QLineEdit{background-color: #33ff33}
-                    QLineEdit:hover{border: 1px solid white; background-color: #33ff33}""")
+                    this_line_edit.setStyleSheet("""border: 2px solid #00c322; border-style: outset;
+                    border-radius: 3px; background-color: white""")
                 else:
-                    this_line_edit.setStyleSheet("""QLineEdit{background-color: #ff3300}
-                    QLineEdit:hover{border: 1px solid white; background-color: pink}""")
+                    this_line_edit.setStyleSheet("""border: 2px solid #ff3300; border-style: outset;
+                    border-radius: 3px; background-color: white""")
 
         if right_answers == 6:
             self.number_of_right_answers += 1

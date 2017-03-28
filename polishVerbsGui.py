@@ -21,7 +21,7 @@ class Ui_MainWindow(object):
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.verb = QtGui.QLabel(self.centralwidget)
-        self.verb.setGeometry(QtCore.QRect(10, 20, 581, 31))
+        self.verb.setGeometry(QtCore.QRect(110, 0, 381, 51))
         font = QtGui.QFont()
         font.setFamily("Buxton Sketch")
         font.setPointSize(28)
@@ -146,6 +146,26 @@ class Ui_MainWindow(object):
         self.statusbar = QtGui.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
+
+        #=======================================================================
+        #Block with my modifications of Gui
+        #Setted initial color of labels, etc.
+        self.ja.setStyleSheet("""border: 2px solid #8c7aae; border-style: outset;
+                                 border-radius: 3px; background-color: white""")
+        self.ty.setStyleSheet("""border: 2px solid #8c7aae; border-style: outset;
+                                 border-radius: 3px; background-color: white""")
+        self.on_ona_ono.setStyleSheet("""border: 2px solid #8c7aae; border-style: outset;
+                                 border-radius: 3px; background-color: white""")
+        self.my.setStyleSheet("""border: 2px solid #8c7aae; border-style: outset;
+                                 border-radius: 3px; background-color: white""")
+        self.wy.setStyleSheet("""border: 2px solid #8c7aae; border-style: outset;
+                                 border-radius: 3px; background-color: white""")
+        self.oni_one.setStyleSheet("""border: 2px solid #8c7aae; border-style: outset;
+                                 border-radius: 3px; background-color: white""")
+        #MainWindow.setStyleSheet("background: #ffffff")
+        self.verb.setToolTip("Verb translation")
+        self.verb.setStyleSheet("QToolTip{color:navy}")
+        #=======================================================================
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
