@@ -28,6 +28,7 @@ class Main(QMainWindow, polishVerbsGui.Ui_MainWindow):
 
     #variable which counts how much right answers the user have
     number_of_right_answers = 0
+    can_take_point = True
 
     def __init__(self, parent=None):
         super(Main, self).__init__(parent)
@@ -43,6 +44,7 @@ class Main(QMainWindow, polishVerbsGui.Ui_MainWindow):
         self.new_verb_button_clicked()
         self.new_verb_button.clicked.connect(self.new_verb_button_clicked)
         self.check_button.clicked.connect(self.check_button_clicked)
+        self.show_answers_button.clicked.connect(self.show_answers_button_clicked)
 
 
     def test_form(self):
@@ -105,6 +107,7 @@ class Main(QMainWindow, polishVerbsGui.Ui_MainWindow):
             field.clear()
             field.setStyleSheet("""border: 2px solid #8c7aae; border-style: outset;
             border-radius: 3px; background-color: white""")
+        self.can_take_point = True
 
     def check_button_clicked(self):
         """
@@ -133,8 +136,31 @@ class Main(QMainWindow, polishVerbsGui.Ui_MainWindow):
                     border-radius: 3px; background-color: white""")
 
         if right_answers == 6:
-            self.number_of_right_answers += 1
-            self.label_with_result.setText(`self.number_of_right_answers`)
+            if self.can_take_point:
+                self.number_of_right_answers += 1
+                self.label_with_result.setText(`self.number_of_right_answers`)
+                self.can_take_point = False
+            else:
+                pass
+
+    def show_answers_button_clicked(self):
+        """
+        Shows right answers, paint all fields in red
+        """
+        all_line_edit_fields = (self.ja, self.ty, self.on_ona_ono, self.my, self.wy, self.oni_one)
+        current_verb = self.verb.text().encode('utf-8')
+        self.dbCursor.execute('SELECT * FROM Main WHERE verb=?', (current_verb,))
+        allForms = self.dbCursor.fetchall()
+        for form in allForms:
+            for x in range(2, 8):
+                all_line_edit_fields[x-2].setText(form[x].decode("utf-8"))
+                all_line_edit_fields[x-2].setStyleSheet("""border: 2px solid #00c322; border-style: outset;
+                    border-radius: 3px; background-color: white""")
+        self.can_take_point = False
+
+
+
+
 
 def main():
     QCoreApplication.setApplicationName("PolishVerbs")

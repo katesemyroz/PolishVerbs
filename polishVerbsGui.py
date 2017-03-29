@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'polish_verbs_2.ui'
+# Form implementation generated from reading ui file 'polish_verbs_3.ui'
 #
-# Created: Mon Mar 20 14:06:14 2017
+# Created: Wed Mar 29 10:47:06 2017
 #      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -75,6 +75,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(11)
         self.ja.setFont(font)
+        self.ja.setStyleSheet("border: 2px solid #8c7aae; border-style: outset; border-radius: 3px;")
         self.ja.setText("")
         self.ja.setObjectName("ja")
         self.ty = QtGui.QLineEdit(self.centralwidget)
@@ -82,6 +83,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(11)
         self.ty.setFont(font)
+        self.ty.setStyleSheet("border: 2px solid #8c7aae; border-style: outset; border-radius: 3px;")
         self.ty.setText("")
         self.ty.setObjectName("ty")
         self.on_ona_ono = QtGui.QLineEdit(self.centralwidget)
@@ -89,6 +91,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(11)
         self.on_ona_ono.setFont(font)
+        self.on_ona_ono.setStyleSheet("border: 2px solid #8c7aae; border-style: outset; border-radius: 3px;")
         self.on_ona_ono.setText("")
         self.on_ona_ono.setObjectName("on_ona_ono")
         self.oni_one = QtGui.QLineEdit(self.centralwidget)
@@ -96,6 +99,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(11)
         self.oni_one.setFont(font)
+        self.oni_one.setStyleSheet("border: 2px solid #8c7aae; border-style: outset; border-radius: 3px;")
         self.oni_one.setText("")
         self.oni_one.setObjectName("oni_one")
         self.my = QtGui.QLineEdit(self.centralwidget)
@@ -103,6 +107,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(11)
         self.my.setFont(font)
+        self.my.setStyleSheet("border: 2px solid #8c7aae; border-style: outset; border-radius: 3px;")
         self.my.setText("")
         self.my.setObjectName("my")
         self.wy = QtGui.QLineEdit(self.centralwidget)
@@ -110,19 +115,22 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(11)
         self.wy.setFont(font)
+        self.wy.setStyleSheet("border: 2px solid #8c7aae; border-style: outset; border-radius: 3px;")
         self.wy.setText("")
         self.wy.setObjectName("wy")
         self.check_button = QtGui.QPushButton(self.centralwidget)
-        self.check_button.setGeometry(QtCore.QRect(320, 290, 111, 31))
+        self.check_button.setGeometry(QtCore.QRect(240, 290, 111, 31))
         font = QtGui.QFont()
         font.setPointSize(12)
         self.check_button.setFont(font)
+        self.check_button.setStyleSheet("border: 2px solid #8c7aae; border-style: outset; border-radius: 3px; background-color: white;")
         self.check_button.setObjectName("check_button")
         self.new_verb_button = QtGui.QPushButton(self.centralwidget)
-        self.new_verb_button.setGeometry(QtCore.QRect(170, 290, 111, 31))
+        self.new_verb_button.setGeometry(QtCore.QRect(50, 290, 111, 31))
         font = QtGui.QFont()
         font.setPointSize(12)
         self.new_verb_button.setFont(font)
+        self.new_verb_button.setStyleSheet("border: 2px solid #8c7aae; border-style: outset; border-radius: 3px; background-color: white")
         self.new_verb_button.setObjectName("new_verb_button")
         self.label_8 = QtGui.QLabel(self.centralwidget)
         self.label_8.setGeometry(QtCore.QRect(20, 350, 221, 31))
@@ -138,6 +146,13 @@ class Ui_MainWindow(object):
         self.label_with_result.setFont(font)
         self.label_with_result.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.label_with_result.setObjectName("label_with_result")
+        self.show_answers_button = QtGui.QPushButton(self.centralwidget)
+        self.show_answers_button.setGeometry(QtCore.QRect(420, 290, 121, 31))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.show_answers_button.setFont(font)
+        self.show_answers_button.setStyleSheet("border: 2px solid #8c7aae; border-style: outset; border-radius: 3px; background-color: white;")
+        self.show_answers_button.setObjectName("show_answers_button")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 596, 21))
@@ -146,26 +161,6 @@ class Ui_MainWindow(object):
         self.statusbar = QtGui.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
-
-        #=======================================================================
-        #Block with my modifications of Gui
-        #Setted initial color of labels, etc.
-        self.ja.setStyleSheet("""border: 2px solid #8c7aae; border-style: outset;
-                                 border-radius: 3px; background-color: white""")
-        self.ty.setStyleSheet("""border: 2px solid #8c7aae; border-style: outset;
-                                 border-radius: 3px; background-color: white""")
-        self.on_ona_ono.setStyleSheet("""border: 2px solid #8c7aae; border-style: outset;
-                                 border-radius: 3px; background-color: white""")
-        self.my.setStyleSheet("""border: 2px solid #8c7aae; border-style: outset;
-                                 border-radius: 3px; background-color: white""")
-        self.wy.setStyleSheet("""border: 2px solid #8c7aae; border-style: outset;
-                                 border-radius: 3px; background-color: white""")
-        self.oni_one.setStyleSheet("""border: 2px solid #8c7aae; border-style: outset;
-                                 border-radius: 3px; background-color: white""")
-        #MainWindow.setStyleSheet("background: #ffffff")
-        self.verb.setToolTip("Verb translation")
-        self.verb.setStyleSheet("QToolTip{color:navy}")
-        #=======================================================================
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -180,6 +175,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Polish Verbs", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("MainWindow", "Print correct forms of the verb", None, QtGui.QApplication.UnicodeUTF8))
+        self.verb.setToolTip(QtGui.QApplication.translate("MainWindow", "<html><head/><body><p>Verb translation</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.verb.setText(QtGui.QApplication.translate("MainWindow", "VERB", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("MainWindow", "ja", None, QtGui.QApplication.UnicodeUTF8))
         self.label_4.setText(QtGui.QApplication.translate("MainWindow", "on/ona/ono", None, QtGui.QApplication.UnicodeUTF8))
@@ -191,4 +187,5 @@ class Ui_MainWindow(object):
         self.new_verb_button.setText(QtGui.QApplication.translate("MainWindow", "New verb", None, QtGui.QApplication.UnicodeUTF8))
         self.label_8.setText(QtGui.QApplication.translate("MainWindow", "Number of right answers:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_with_result.setText(QtGui.QApplication.translate("MainWindow", "0", None, QtGui.QApplication.UnicodeUTF8))
+        self.show_answers_button.setText(QtGui.QApplication.translate("MainWindow", "Show answers", None, QtGui.QApplication.UnicodeUTF8))
 
