@@ -15,14 +15,15 @@ class Profiler(object):
         print "Elapsed time: {:.3f} sec".format(time.time() - self._startTime)
 
 
-with Profiler() as p:
+list_of_words = []
+all_forms_and_verbs = []
+link = 'http://pl.bab.la/koniugacja/polski/'
 
-    #take verbs
+
+def take_all_verbs():
     #amount of some verbs: o - 400+ words, p - 593 words, r - 249, s - 353, u-z - 1430;
-    list_of_words = []
     alphabet = ['a/', 'b/', 'c/', 'd/', 'e/', 'f/', 'g/', 'h/', 'i/', 'j/', 'k/', 'l/', 'ł/', 'm/', 'n/', 'o/', 'p/',
                 'r/', 's/', 't/', 'u/', 'w/', 'y/', 'z/']
-    link = 'http://pl.bab.la/koniugacja/polski/'
     for alphabet_letter in alphabet:
         page = requests.get(link + alphabet_letter)
         tree = html.fromstring(page.content)
@@ -34,9 +35,7 @@ with Profiler() as p:
             temp_list = tree2.xpath("""//div[@class='content']//div[@class='dict-select-column']/ul/li/a/text()""")
             list_of_words.extend(temp_list)
 
-
-    #take all forms of all verbs from the web site
-    all_forms_and_verbs = []
+def take_all_forms_of_all_verbs():
     for word in list_of_words:
         verb_and_its_forms = []
         verb_and_its_forms.append(word.encode('utf-8'))
@@ -48,25 +47,67 @@ with Profiler() as p:
             verb_and_its_forms.append(form.encode('utf-8'))
         all_forms_and_verbs.append(verb_and_its_forms)
 
-    #==========================================================
+def take_russian_translation_of_verbs():
+    translations = []
+    all_verbs = []
 
-    # #Write to the file
-    #
-    # with open("output.csv", 'ab') as resultFile:
-    #     writer = csv.writer(resultFile)
-    #     writer.writerows(all_forms_and_verbs)
+    with open("verbs_and_forms.csv", 'rb') as resultFile:
+        reader = csv.reader(resultFile)
+        for row in reader:
+            all_verbs.append(row[0])
+
+    url = "http://pl.bab.la/slownik/polski-rosyjski/"
+    for word in all_verbs:
+        page = requests.get(url + word)
+        tree = html.fromstring(page.content)
+        translations_of_one_verb_list = tree.xpath("""//div[@class='content'][1]//
+        div[@class='quick-result-entry']//ul[@class='sense-group-results']/li/a/text()""")
+
+        #print len(translations_of_one_verb_list)
+        if len(translations_of_one_verb_list) == 0:
+            translations.append(" ")
+        else:
+            temp_list = []
+            for tr in translations_of_one_verb_list:
+                temp_list.append(tr.encode('utf-8'))
+            translations_of_one_verb_str = ', '.join(temp_list)
+            translations.append(translations_of_one_verb_str)
+
+    for q in translations:
+        print q
 
 
-    # #Read from the file
 
-    # with open("verbs_and_forms.csv", 'rb') as resultFile:
-    #     reader = csv.reader(resultFile)
-    #     for row in reader:
-    #         print ', '.join(row)
-    #
-    #     #Take one certain row and print 1st element in row
-    #     interestingrow = [row for idx, row in enumerate(reader) if idx == 4126]
-    #     print interestingrow[0][0]
-    #
-    #     #Take rows in range (a1, a2)
-    #     interestingrows = [row for idx, row in enumerate(reader) if idx in (a1, a2)]
+def write_to_the_file(filename):
+    with open("verbs_and_forms.csv", 'ab') as resultFile:
+        writer = csv.writer(resultFile)
+        writer.writerows(filename)
+
+def read_from_the_file_and_print_all_data():
+    with open("verbs_and_forms.csv", 'rb') as resultFile:
+        reader = csv.reader(resultFile)
+        for row in reader:
+            print ', '.join(row)
+
+def print_1st_el_in_row():
+    #Take one certain row and print 1st element in row 4126
+    with open("verbs_and_forms.csv", 'rb') as resultFile:
+        reader = csv.reader(resultFile)
+        interestingrow = [row for idx, row in enumerate(reader) if idx == 4126]
+        print interestingrow[0][0]
+
+def take_rows_in_range_a1_a2(a1, a2):
+    with open("verbs_and_forms.csv", 'rb') as resultFile:
+        reader = csv.reader(resultFile)
+        interestingrows = [row for idx, row in enumerate(reader) if idx in (a1, a2)]
+        print interestingrows
+
+
+with Profiler() as p:
+    take_russian_translation_of_verbs()
+
+
+
+
+
+

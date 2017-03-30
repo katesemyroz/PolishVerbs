@@ -7,7 +7,6 @@ import sqlite3
 import os
 import random
 import csv
-import time
 
 import polishVerbsGui
 
