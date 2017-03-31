@@ -38,7 +38,8 @@ class Main(QMainWindow, polishVerbsGui.Ui_MainWindow):
                               verb TEXT, ja TEXT, ty TEXT, on_ona_ono TEXT,
                               my TEXT, wy TEXT, oni_one TEXT)""")
         self.dbConn.commit()
-        self.fill_database()
+        self.fill_database_with_verbs_and_forms()
+        self.fill_database_with_translations()
 
         self.new_verb_button_clicked()
         self.new_verb_button.clicked.connect(self.new_verb_button_clicked)
@@ -72,7 +73,7 @@ class Main(QMainWindow, polishVerbsGui.Ui_MainWindow):
         self.wy.setText("jesteście".decode("utf-8"))
         self.oni_one.setText("są".decode("utf-8"))
 
-    def fill_database(self):
+    def fill_database_with_verbs_and_forms(self):
         """
         This function checks if there are words in database. If no - fills it from verbs.csv file
         """
@@ -87,6 +88,26 @@ class Main(QMainWindow, polishVerbsGui.Ui_MainWindow):
                 self.dbConn.commit()
         else:
             pass
+
+    def fill_database_with_translations(self):
+        """
+        This function creates new table with translations of verbs.
+        Later I will change this function.
+        """
+        self.dbCursor.execute("""CREATE TABLE IF NOT EXISTS Translations(id INTEGER PRIMARY KEY,
+                              verb TEXT, translation TEXT)""")
+        self.dbConn.commit()
+        self.dbCursor.execute("""SELECT count(verb) FROM Translations""")
+        number_of_verbs = self.dbCursor.fetchone()
+        if (number_of_verbs[0] == 0):
+            with open("translations.csv", 'rb') as resultFile:
+                reader = csv.reader(resultFile)
+                for row in reader:
+                    self.dbCursor.execute('''INSERT INTO Translations VALUES (null, ?, ?)''', row)
+                self.dbConn.commit()
+        else:
+            pass
+
 
     def new_verb_button_clicked(self):
         """
@@ -107,6 +128,11 @@ class Main(QMainWindow, polishVerbsGui.Ui_MainWindow):
             field.setStyleSheet("""border: 2px solid #8c7aae; border-style: outset;
             border-radius: 3px; background-color: white""")
         self.can_take_point = True
+
+        self.dbCursor.execute("""SELECT translation FROM Translations WHERE id=?""", (id_of_random_verb,))
+        translation = self.dbCursor.fetchone()
+        translation_unicode = translation[0].decode('utf-8')
+        self.verb.setToolTip(translation_unicode)
 
     def check_button_clicked(self):
         """

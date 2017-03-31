@@ -17,6 +17,7 @@ class Profiler(object):
 
 list_of_words = []
 all_forms_and_verbs = []
+translations = []
 link = 'http://pl.bab.la/koniugacja/polski/'
 
 
@@ -48,33 +49,35 @@ def take_all_forms_of_all_verbs():
         all_forms_and_verbs.append(verb_and_its_forms)
 
 def take_russian_translation_of_verbs():
-    translations = []
     all_verbs = []
-
     with open("verbs_and_forms.csv", 'rb') as resultFile:
         reader = csv.reader(resultFile)
         for row in reader:
             all_verbs.append(row[0])
 
     url = "http://pl.bab.la/slownik/polski-rosyjski/"
-    for word in all_verbs:
-        page = requests.get(url + word)
+    #for word in all_verbs:
+    for x in range(4660, 4663):
+        one_verb_and_translation = []
+        print all_verbs[x], type(all_verbs[x])
+        one_verb_and_translation.append(all_verbs[x])
+        page = requests.get(url + all_verbs[x])
         tree = html.fromstring(page.content)
         translations_of_one_verb_list = tree.xpath("""//div[@class='content'][1]//
         div[@class='quick-result-entry']//ul[@class='sense-group-results']/li/a/text()""")
 
         #print len(translations_of_one_verb_list)
-        if len(translations_of_one_verb_list) == 0:
-            translations.append(" ")
-        else:
+        if len(translations_of_one_verb_list) != 0:
             temp_list = []
             for tr in translations_of_one_verb_list:
-                temp_list.append(tr.encode('utf-8'))
-            translations_of_one_verb_str = ', '.join(temp_list)
-            translations.append(translations_of_one_verb_str)
+                temp_list.append(tr.encode("utf-8"))
+            translations_of_one_verb_str = '\n'.join(temp_list)
+            one_verb_and_translation.append(translations_of_one_verb_str)
+        translations.append(one_verb_and_translation)
 
-    for q in translations:
-        print q
+    with open("translations.csv", 'ab') as resultFile:
+        writer = csv.writer(resultFile)
+        writer.writerows(translations)
 
 
 
@@ -83,8 +86,8 @@ def write_to_the_file(filename):
         writer = csv.writer(resultFile)
         writer.writerows(filename)
 
-def read_from_the_file_and_print_all_data():
-    with open("verbs_and_forms.csv", 'rb') as resultFile:
+def read_from_the_file_and_print_all_data(file_name):
+    with open(file_name, 'rb') as resultFile:
         reader = csv.reader(resultFile)
         for row in reader:
             print ', '.join(row)
@@ -105,6 +108,7 @@ def take_rows_in_range_a1_a2(a1, a2):
 
 with Profiler() as p:
     take_russian_translation_of_verbs()
+    read_from_the_file_and_print_all_data("translations.csv")
 
 
 
